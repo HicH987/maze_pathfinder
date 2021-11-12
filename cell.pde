@@ -40,6 +40,7 @@ class Cell {
 
   void highlight(color c) {
     // tine = c;
+    stroke(255);
     fill(c);
     rect(x, y, w, h);
   } 
