@@ -38,7 +38,7 @@ void obstaclGenerator() {
     }
 }
 LinkedList<Cell> path = new LinkedList<Cell>();
-// Iterator<Cell> current = path;
+
 
 void setup() {
     size(302, 302);
@@ -78,27 +78,13 @@ void setup() {
             }
     }
     }
-    
-    // for (int i=0; i< cols; i++) {
-    //   for (int j=0; j<rows; j++) {
-    
-    //       grid[i][j].printCell(); print("      ");
-    
-    //   }
-    //   print("\n");  
-    
-// }
-    
+
     path = g.breadthFirstSearch(0, 35);
 
     for (Cell c : path){
         if(c.index != 0  &&  c.index !=35)
          grid[(c.x)/heightCell][(c.y)/heightCell].tine=colorPath;
-        //  showGrid(grid);
      }
-    //  print(path.size(), "\n");
-    // for (Cell c : path)
-    //     print(c.index, " ");
 
 }
 
@@ -116,30 +102,10 @@ void draw() {
     //end
     grid[5][5].highlight(colorEnd);
 
-
-
-    // for (int i = 0; i < cols; i++) {
-    //     for (int j = 0; j < rows; j++) {
-    //         if(grid[i][j].tine == colorPath){
-    //             pathColor.add(grid[i][j]);
-    //             // grid[i][j].highlight(colorPath);
-    //         }
-    //     }
-    // }
-
-    // current = path.iterator();
-
-    // if(current.hasNext()){
-
-    //     Cell i = current.next();
-    //     i.highlight(colorPath);
-    // }
-
     if(path.size() > 0){
         Cell current = path.getFirst();
         grid[current.x/heightCell][current.y/heightCell].highlight(colorPath);
         path.removeFirst();
-
     }
 
 }
@@ -151,6 +117,12 @@ void showGrid(Cell[][] grid) {
     for (int i = 0; i < cols; i++) {
         for (int j = 0; j < rows; j++) {
             grid[i][j].display();
+        }
+    }
+    for (int i = 0; i < cols; i++) {
+        for (int j = 0; j < rows; j++) {
+            if (grid[i][j].highlighted)
+                 grid[i][j].highlight(grid[i][j].tine);
         }
     }
     

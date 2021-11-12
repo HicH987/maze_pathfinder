@@ -4,6 +4,7 @@ class Cell {
   int w, h;   // width and height
   int index;
   color tine;
+  Boolean highlighted = false;
   // boolean obstacl;
 
   public Cell(int tempX, int tempY, int tempW, int tempH, int i /*, boolean b*/) {
@@ -12,6 +13,7 @@ class Cell {
     w = tempW;
     h = tempH;
     index = i;
+   
     // obstacl = b;
 
     this.adjacents = new LinkedList<>();
@@ -40,6 +42,7 @@ class Cell {
 
   void highlight(color c) {
     // tine = c;
+    highlighted= true;
     stroke(255);
     fill(c);
     rect(x, y, w, h);
