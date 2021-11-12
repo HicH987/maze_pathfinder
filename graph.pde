@@ -1,11 +1,8 @@
-// Java program to print BFS traversal from a given source vertex.
-// BFS(int s) traverses vertices reachable from s.
 import java.io.*;
 import java.util.*;
 
-// This class represents a directed graph using adjacency list
-// representation
 class Graph {
+    
   private HashMap<Integer, Cell> vertices;
 
   public Graph() {
@@ -14,14 +11,6 @@ class Graph {
 
   public void addCell(int index, Cell c) {
     vertices.put(index, c);
-  }
-
-  public void addEdge(int c1, int c2) {
-    Cell v1 = vertices.get(c1);
-    Cell v2 = vertices.get(c2);
-
-    v1.addAdjacent(v2);
-    v2.addAdjacent(v1);
   }
 
   public LinkedList<Cell> breadthFirstSearch(int start, int end) {
@@ -35,7 +24,6 @@ class Graph {
 
     Cell current = startVert; // the current Cell to check
     while (current != endVert) { // repeats until the end is reached
-
       LinkedList<Cell> adjacents = current.getAdjacents(); // get adjacents
 
       for (Cell v : adjacents) { // add all the adjacents
@@ -44,7 +32,6 @@ class Graph {
           queue.add(v);
         }
       }
-
       current = queue.remove(); // goes to the next Cell
     }
 
@@ -59,19 +46,3 @@ class Graph {
     return path;
   }
 }
-
-// Graph g = new Graph(7);
-
-// g.addEdge(0, 1);
-// g.addEdge(0, 2);
-// g.addEdge(1, 3);
-// g.addEdge(2, 1);
-// g.addEdge(2, 4);
-// g.addEdge(3, 5);
-// g.addEdge(4, 6);
-// g.addEdge(5, 6);
-
-
-// print(g.adj); print("\n");
-
-// print(g.BFS(0, 6));print("\n");

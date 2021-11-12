@@ -64,28 +64,28 @@ void setup() {
             if (grid[i][j].tine !=  colorObstacl) {
                 g.addCell(grid[i][j].index, grid[i][j]);
                 
-               if (j > 0 && grid[i][j - 1].tine !=  colorObstacl)
+                if (j > 0 && grid[i][j - 1].tine !=  colorObstacl)
                     grid[i][j].addAdjacent(grid[i][j - 1]);
                 
-               if (i > 0 && grid[i - 1][j].tine !=  colorObstacl)
+                if (i > 0 && grid[i - 1][j].tine !=  colorObstacl)
                     grid[i][j].addAdjacent(grid[i - 1][j]);
                 
-               if (j < rows - 1 && grid[i][j + 1].tine !=  colorObstacl)
+                if (j < rows - 1 && grid[i][j + 1].tine !=  colorObstacl)
                     grid[i][j].addAdjacent(grid[i][j + 1]);
                 
-               if (i < cols - 1 && grid[i + 1][j].tine !=  colorObstacl)
+                if (i < cols - 1 && grid[i + 1][j].tine !=  colorObstacl)
                     grid[i][j].addAdjacent(grid[i + 1][j]);
             }
+        }
     }
-    }
-
+    
     path = g.breadthFirstSearch(0, 35);
-
-    for (Cell c : path){
-        if(c.index != 0  &&  c.index !=35)
-         grid[(c.x)/heightCell][(c.y)/heightCell].tine=colorPath;
-     }
-
+    
+    for (Cell c : path) {
+        if (c.index != 0  &&  c.index != 35)
+            grid[(c.x) / heightCell][(c.y) / heightCell].tine = colorPath;
+    }
+    
 }
 
 
@@ -93,7 +93,7 @@ void draw() {
     background(0);
     
     showGrid(grid);
-
+    
     for (int i = 0; i < nbObstacl; i++) {
         grid[obstaclXY[i][0]][obstaclXY[i][1]].highlight(colorObstacl);
     }
@@ -101,17 +101,14 @@ void draw() {
     grid[0][0].highlight(colorStat);
     //end
     grid[5][5].highlight(colorEnd);
-
-    if(path.size() > 0){
+    
+    if (path.size() > 0) {
         Cell current = path.getFirst();
-        grid[current.x/heightCell][current.y/heightCell].highlight(colorPath);
+        grid[current.x / heightCell][current.y / heightCell].highlight(colorPath);
         path.removeFirst();
     }
-
+    
 }
-
-
-
 
 void showGrid(Cell[][] grid) {
     for (int i = 0; i < cols; i++) {
@@ -122,7 +119,7 @@ void showGrid(Cell[][] grid) {
     for (int i = 0; i < cols; i++) {
         for (int j = 0; j < rows; j++) {
             if (grid[i][j].highlighted)
-                 grid[i][j].highlight(grid[i][j].tine);
+                grid[i][j].highlight(grid[i][j].tine);
         }
     }
     
