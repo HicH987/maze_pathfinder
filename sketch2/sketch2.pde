@@ -1,6 +1,5 @@
 import java.io.*;
 import java.util.*;
-
 class Cell {
   private LinkedList<Cell> adjacents;
   int x, y;   // x,y location
@@ -32,7 +31,6 @@ class Cell {
     return this.adjacents;
   }
 }
-
 class Graph {
   private HashMap<Integer, Cell> vertices;
 
@@ -87,6 +85,8 @@ class Graph {
     return path;
   }
 }
+
+
 Cell[][] grid = new Cell[3][3];
 Graph g = new Graph();
 

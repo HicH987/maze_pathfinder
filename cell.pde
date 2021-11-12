@@ -39,7 +39,7 @@ class Cell {
   }
 
   void highlight(color c) {
-    tine = c;
+    // tine = c;
     fill(c);
     rect(x, y, w, h);
   } 

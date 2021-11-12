@@ -1,10 +1,9 @@
-// 2D Array of objects
 Cell[][] grid;
 
-// Number of columns and rows in the grid
 int cols = 6;
 int rows = 6;
-
+int heightCell = 50;
+int widthCell = 50;
 
 color colorObstacl = color (179, 178, 178);
 color colorStat = color (8, 189, 23); 
@@ -24,6 +23,9 @@ void obstaclGenerator() {
             obstaclXY[i][j] = floor(random(0, 5));
         }
     }
+    for (int i = 0; i < nbObstacl; i++) {
+        grid[obstaclXY[i][0]][obstaclXY[i][1]].tine=colorObstacl;
+    }
 }
 
 
@@ -31,21 +33,26 @@ void setup() {
     size(302, 302);
 
     grid = new Cell[cols][rows];
-    
+    Graph g = new Graph();
+
     for (int i = 0; i < cols; i++) {
         for (int j = 0; j < rows; j++) {
             int index = j+i*rows;
-            grid[i][j] = new Cell(i * 50, j * 50, 50, 50, index);
+            grid[i][j] = new Cell(i * heightCell, j * widthCell, heightCell, widthCell, index);
         }
     }
-    
+
     obstaclGenerator();
+    //start
+    grid[0][0].tine=colorStat;
+    //end
+    grid[5][5].tine=colorEnd;
+
 }
 
 
 void draw() {
     background(0);
-    
     
     for (int i = 0; i < cols; i++) {
         for (int j = 0; j < rows; j++) {
@@ -61,4 +68,5 @@ void draw() {
     grid[0][0].highlight(colorStat);
     //end
     grid[5][5].highlight(colorEnd);
+    
 }
