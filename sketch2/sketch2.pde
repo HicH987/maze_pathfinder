@@ -44,12 +44,6 @@ class Graph {
     vertices.put(index, c);
   }
 
-  // public Cell addCell(int index) {
-  //     Cell c = new Cell();
-  //     vertices.put(index, c);
-  //     return c;
-  // }
-
   public void addEdge(int c1, int c2) {
     Cell v1 = vertices.get(c1);
     Cell v2 = vertices.get(c2);
