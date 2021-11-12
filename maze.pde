@@ -34,8 +34,8 @@ void setup() {
     
     for (int i = 0; i < cols; i++) {
         for (int j = 0; j < rows; j++) {
-            // Initialize each object
-            grid[i][j] = new Cell(i * 50, j * 50, 50, 50);
+            int index = j+i*rows;
+            grid[i][j] = new Cell(i * 50, j * 50, 50, 50, index);
         }
     }
     

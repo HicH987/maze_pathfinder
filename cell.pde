@@ -1,16 +1,32 @@
 class Cell {
-
-  // A cell object knows about its location in the grid as well as its size with the variables x, y, w, h.
+  private LinkedList<Cell> adjacents;
   int x, y;   // x,y location
   int w, h;   // width and height
+  int index;
   color tine;
+  // boolean obstacl;
 
-  // Cell Constructor
-  Cell(int tempX, int tempY, int tempW, int tempH) {
+  public Cell(int tempX, int tempY, int tempW, int tempH, int i /*, boolean b*/) {
     x = tempX;
     y = tempY;
     w = tempW;
     h = tempH;
+    index = i;
+    // obstacl = b;
+
+    this.adjacents = new LinkedList<>();
+  }
+
+  void printCell() {
+    print(x, " : ", y, " /", index);
+  }
+
+  public void addAdjacent(Cell adjacentCell) {
+    adjacents.add(adjacentCell);
+  }
+
+  public LinkedList<Cell> getAdjacents() {
+    return this.adjacents;
   }
 
   // Oscillation means increase angle
