@@ -1,6 +1,6 @@
 import java.io.*;
 import java.util.*;
-
+color col = color (47, 123, 3);
 class Graph {
     
   private HashMap<Integer, Cell> vertices;
@@ -24,15 +24,19 @@ class Graph {
 
     Cell current = startVert; // the current Cell to check
     while (current != endVert) { // repeats until the end is reached
-      LinkedList<Cell> adjacents = current.getAdjacents(); // get adjacents
+        LinkedList<Cell> adjacents = current.getAdjacents(); // get adjacents
 
-      for (Cell v : adjacents) { // add all the adjacents
-        if (!visited.containsKey(v)) { // but only if it hasn't already been traversed
-          visited.put(v, current);
-          queue.add(v);
+        for (Cell v : adjacents) { // add all the adjacents
+          if (!visited.containsKey(v)) { // but only if it hasn't already been traversed
+            visited.put(v, current);
+            queue.add(v);
+          }
         }
-      }
-      current = queue.remove(); // goes to the next Cell
+        if(queue.size()>0){
+          // current.highlight(col);
+          current = queue.remove(); // goes to the next Cell
+        }
+        else return null;
     }
 
     // create the path

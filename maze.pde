@@ -1,51 +1,36 @@
-Cell[][] grid;
+int cols = 20;
+int rows = 20;
+int heightCell =  502/ rows;
+int widthCell = 502/ cols;
 
-int cols = 6;
-int rows = 6;
-int heightCell = 302 / rows;
-int widthCell = 302 / cols;
+int startX = 0;
+int startY = 0;
+int startIndex = startY + startX * rows;
+int endX = cols-1;
+int endY = rows-1 ;
+int endIndex = endY + endX * rows;
 
-int startIndex = 0;
-int endIndex = (cols - 1) + (rows - 1) * rows;
+int nbObstacl =100;
+int[][] obstaclXY = new int[nbObstacl][2];
 
+Cell[][] grid = new Cell[cols][rows];
+Graph g = new Graph();
+LinkedList<Cell> pathMin = new LinkedList<Cell>();
+// LinkedList<Cell> path = new LinkedList<Cell>();
+
+boolean blocked = false;
 color colorObstacl = color(179, 178, 178);
 color colorStat = color(8, 189, 23); 
 color colorEnd = color(181, 25, 25);
-color colorPath = color(226, 219, 13); 
-// int startX = floor(random(0, 5));
-// int startY = floor(random(0, 5));
+color colorPathMin = color(226, 219, 13); 
+color colorPath = color(85, 235, 97); 
 
-// int endX = floor(random(0, 5));
-// int endY = floor(random(0, 5));
-
-int nbObstacl = 6;
-int[][] obstaclXY = new int[nbObstacl][2];
-void obstaclGenerator() {
-    for (int i = 0; i < nbObstacl; i++) {
-        obstaclXY[i][0] = floor(random(0, 5));
-        if (obstaclXY[i][0] == 0)
-            obstaclXY[i][1] = floor(random(1, 5));
-        else 
-            obstaclXY[i][1] = floor(random(0, 5));
-        
-        if (obstaclXY[i][0] == 5)
-            obstaclXY[i][1] = floor(random(0, 4));
-        else 
-            obstaclXY[i][1] = floor(random(0, 5));
-    }
-    for (int i = 0; i < nbObstacl; i++) {
-        grid[obstaclXY[i][0]][obstaclXY[i][1]].tine = colorObstacl;
-    }
-}
-LinkedList<Cell> path = new LinkedList<Cell>();
-
+//int startX = floor(random(0, 5)); int startY = floor(random(0, 5)); int endX = floor(random(0, 5)); int endY = floor(random(0, 5));
 
 void setup() {
-    size(302, 302);
+    size(502, 502);
     frameRate(3);
-    grid = new Cell[cols][rows];
-    Graph g = new Graph();
-    
+
     for (int i = 0; i < cols; i++) {
         for (int j = 0; j < rows; j++) {
             int index = j + i * rows;
@@ -55,60 +40,59 @@ void setup() {
     
     obstaclGenerator();
     //start
-    grid[0][0].tine = colorStat;
+    grid[startX][startY].tine = colorStat;
     //end
-    grid[5][5].tine = colorEnd;
+    grid[endX][endY].tine = colorEnd;
     
-    for (int i = 0; i < cols; i++) {
-        for (int j = 0; j < rows; j++) {
-            if (grid[i][j].tine !=  colorObstacl) {
-                g.addCell(grid[i][j].index, grid[i][j]);
-                
-                if (j > 0 && grid[i][j - 1].tine !=  colorObstacl)
-                    grid[i][j].addAdjacent(grid[i][j - 1]);
-                
-                if (i > 0 && grid[i - 1][j].tine !=  colorObstacl)
-                    grid[i][j].addAdjacent(grid[i - 1][j]);
-                
-                if (j < rows - 1 && grid[i][j + 1].tine !=  colorObstacl)
-                    grid[i][j].addAdjacent(grid[i][j + 1]);
-                
-                if (i < cols - 1 && grid[i + 1][j].tine !=  colorObstacl)
-                    grid[i][j].addAdjacent(grid[i + 1][j]);
-            }
+    createGraph();
+    
+    pathMin = g.breadthFirstSearch(startIndex, endIndex);
+    if (pathMin != null)
+        for (Cell c :  pathMin) {
+            if (c.index != startIndex &&  c.index != endIndex)
+                grid[(c.x) / heightCell][(c.y) / widthCell].tine = colorPathMin;
+                grid[(c.x) / heightCell][(c.y) / widthCell].visited = true;
         }
-    }
-    
-    path = g.breadthFirstSearch(0, 35);
-    
-    for (Cell c : path) {
-        if (c.index != 0  &&  c.index != 35)
-            grid[(c.x) / heightCell][(c.y) / heightCell].tine = colorPath;
-    }
-    
+    else
+       blocked = true;  
 }
 
 
 void draw() {
     background(0);
-    
+
     showGrid(grid);
     
+
     for (int i = 0; i < nbObstacl; i++) {
         grid[obstaclXY[i][0]][obstaclXY[i][1]].highlight(colorObstacl);
+        // grid[obstaclXY[i][0]][obstaclXY[i][1]].flower();
+        
     }
     //start
-    grid[0][0].highlight(colorStat);
+    grid[startX][startY].highlight(colorStat);
     //end
-    grid[5][5].highlight(colorEnd);
+    grid[endX][endY].highlight(colorEnd);
     
-    if (path.size() > 0) {
-        Cell current = path.getFirst();
-        grid[current.x / heightCell][current.y / heightCell].highlight(colorPath);
-        path.removeFirst();
+    if(!blocked){
+        if (pathMin.size() > 0) {
+            Cell current = pathMin.getFirst();
+            grid[current.x / heightCell][current.y / heightCell].highlight(colorStat);
+            pathMin.removeFirst();
+        }
     }
-    
+
+    else{
+
+        textSize(50);//text size
+        fill(0);//textcolor RGBalpha
+
+        text("No path", startX * heightCell + heightCell , startY * widthCell + widthCell);
+
+    }
+
 }
+
 
 void showGrid(Cell[][] grid) {
     for (int i = 0; i < cols; i++) {
@@ -122,5 +106,48 @@ void showGrid(Cell[][] grid) {
                 grid[i][j].highlight(grid[i][j].tine);
         }
     }
-    
+}
+
+void obstaclGenerator() {
+    for (int i = 0; i < nbObstacl; i++) {
+        obstaclXY[i][0] = floor(random(0, cols-1));
+        obstaclXY[i][1] = floor(random(0, rows-1));
+        // if (obstaclXY[i][0] == 0)
+        //     obstaclXY[i][1] = floor(random(startY+1, endY));
+        // else 
+        //     obstaclXY[i][1] = floor(random(startY, endY));
+        // if (obstaclXY[i][0] == endX)
+        //     obstaclXY[i][1] = floor(random(startY, endY-1));
+        // else 
+        //     obstaclXY[i][1] = floor(random(startY, endY));
+    }
+    for (int i = 0; i < nbObstacl; i++)
+    {
+        if(obstaclXY[i][0] != startX || obstaclXY[i][1]!=startY){
+            if(obstaclXY[i][0] != endX || obstaclXY[i][1]!=endY)
+                grid[obstaclXY[i][0]][obstaclXY[i][1]].tine = colorObstacl;
+        }
+    } 
+}
+
+void createGraph (){
+    for (int i = 0; i < cols; i++) {
+        for (int j = 0; j < rows; j++) {
+            if (grid[i][j].tine !=  colorObstacl && !grid[i][j].visited) {
+                g.addCell(grid[i][j].index, grid[i][j]);
+                
+                if (j > 0 && grid[i][j - 1].tine !=  colorObstacl && !grid[i][j - 1].visited )
+                    grid[i][j].addAdjacent(grid[i][j - 1]);
+                
+                if (i > 0 && grid[i - 1][j].tine !=  colorObstacl && !grid[i - 1][j].visited)
+                    grid[i][j].addAdjacent(grid[i - 1][j]);
+                
+                if (j < rows - 1 && grid[i][j + 1].tine !=  colorObstacl && !grid[i][j + 1].visited)
+                    grid[i][j].addAdjacent(grid[i][j + 1]);
+                
+                if (i < cols - 1 && grid[i + 1][j].tine !=  colorObstacl && !grid[i + 1][j].visited)
+                    grid[i][j].addAdjacent(grid[i + 1][j]);
+            }
+        }
+    }
 }
