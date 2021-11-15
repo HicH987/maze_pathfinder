@@ -90,14 +90,14 @@ void draw() {
         for (Cell v : adjacents) {
             if (!visited.containsKey(v)){ 
                 visited.put(v, current);
-                queue.add(v);
+                queue.addLast(v);
             }
         }
         
         if (queue.size()>0) {
             grid[current.x / heightCell][current.y / widthCell].highlight(colorPath);
             grid[current.x / heightCell][current.y / widthCell].tine = colorPath;
-            current = queue.remove(); 
+            current = queue.removeFirst(); 
         }
        
         else{
