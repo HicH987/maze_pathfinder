@@ -1,13 +1,18 @@
-int cols = 20;
-int rows = 20;
-int heightCell =  502 / rows;
-int widthCell = 502 / cols;
+int cols = 20;//for x
+int rows = 20;//for y
+int heightCell =  502 / cols;//for x
+int widthCell = 502 / rows;//for y
 
-int startX = 0;
-int startY = 0;
+int startX = floor(random(0,cols-1));
+int startY = floor(random(0,rows-1));
+//int startX = 0;
+//int startY = 0;
 int startIndex = startY + startX * rows;
-int endX = cols - 1;
-int endY = rows - 1;
+
+int endX = randomWithExclusion (0,cols-1, startX);
+int endY = randomWithExclusion (0,rows-1, startY);
+//int endX = cols - 1;
+//int endY = rows - 1;
 int endIndex = endY + endX * rows;
 
 int nbObstacl = 100;
@@ -16,7 +21,7 @@ int[][] obstaclXY = new int[nbObstacl][2];
 Cell[][] grid = new Cell[cols][rows];
 Graph g = new Graph();
 LinkedList<Cell> pathMin = new LinkedList<Cell>();
-// LinkedList<Cell> path = new LinkedList<Cell>();
+
 
 boolean createPath= false;
 
@@ -26,12 +31,16 @@ color colorEnd = color(255, 5, 147);
 color colorPathMin = color(226, 219, 13); 
 color colorPath = color(12, 87, 18); 
 
-HashMap<Integer, Cell> vertices = new HashMap<>();
-LinkedList<Cell> queue = new LinkedList<>(); 
+//for storing
+HashMap<Integer, Cell> vertices = new HashMap<>();//for storing cells
+
+LinkedList<Cell> queue = new LinkedList<>();
+
 Cell startVert;
 Cell endVert;
 Cell current;
-HashMap<Cell, Cell> visited = new HashMap<>();
+
+HashMap<Cell, Cell> visited = new HashMap<>();//for storing visited cell : these parents
 
 void setup() {
     size(502, 502);
@@ -49,14 +58,13 @@ void setup() {
     createGraph();
     
     //initialisations
-    vertices = g.getVertices();
+    vertices = g.getVertices();//get all grqph vertices
 
-    startVert = vertices.get(startIndex);
-    endVert = vertices.get(endIndex);
+    startVert = vertices.get(startIndex);//get start cell
+    endVert = vertices.get(endIndex);//get end cell
     
-    visited.put(startVert, null); 
-    current = startVert;
-    
+    visited.put(startVert, null);//initilise visited to start cell , and null for these parents
+    current = startVert;//store current cell
 }
 
 
@@ -65,10 +73,11 @@ void draw() {
     background(0);
 
     showGrid(grid);
+
     //highlight obstacles cells
     for (int i = 0; i < nbObstacl; i++) {
         grid[obstaclXY[i][0]][obstaclXY[i][1]].highlight(colorObstacl);
-        // grid[obstaclXY[i][0]][obstaclXY[i][1]].flower();
+        grid[obstaclXY[i][0]][obstaclXY[i][1]].flower();
     }
     //highlight start and end cell
     grid[startX][startY].highlight(colorStart);
@@ -103,7 +112,7 @@ void draw() {
     }
 
     //get optimal path
-    if (current== endVert || createPath==true) {
+    if (current == endVert || createPath == true) {
         createPath=true;
         pathMin.addFirst(current);
        if(current != startVert) {
@@ -114,8 +123,8 @@ void draw() {
             if (pathMin.size() > 0) {
                 Cell w = pathMin.getLast();
                 if(w!=startVert){
-                    grid[w.x / heightCell][w.y / heightCell].highlight(colorPathMin);
-                    grid[w.x / heightCell][w.y / heightCell].tine = colorPathMin;
+                    grid[w.x / heightCell][w.y / widthCell].highlight(colorPathMin);
+                    grid[w.x / heightCell][w.y / widthCell].tine = colorPathMin;
                 }
                 pathMin.removeLast();
             }
@@ -184,4 +193,13 @@ void showGrid(Cell[][] grid) {
                 grid[i][j].highlight(grid[i][j].tine);
         }
     }
+}
+
+int randomWithExclusion(int start, int end, int excludes){
+    int randomInt = floor(random(start,end));
+
+    if (randomInt>=excludes)
+      randomInt++;
+
+    return randomInt;
 }

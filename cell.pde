@@ -9,7 +9,6 @@ class Cell {
   int index;
   color tine;
   Boolean highlighted = false;
-  Boolean visited = false;
 
   Cell(int tempX, int tempY, int tempW, int tempH, int i) {
     x = tempX;
@@ -17,7 +16,7 @@ class Cell {
     w = tempW;
     h = tempH;
     index = i;
-    
+
     this.adjacents = new LinkedList<>();
   }
 
@@ -49,19 +48,19 @@ class Cell {
     rect(x, y, w, h);
   } 
 
-  // void flower(){
-  //   strokeWeight(1);
-  //   stroke(0);
-  //   highlighted= true;
+  void flower(){
+    strokeWeight(0.5);
+    stroke(0);
+    highlighted= true;
 
-  //   fill(c);
-  //   ellipse(x+w/4, y+h/4, w/2, h/2);
-  //   ellipse((x+w/4)+ w/2, y+h/4, w/2, h/2);
-  //   ellipse(x+w/4, (y+h/4)+ h/2, w/2, h/2);
-  //   ellipse((x+w/4)+ w/2,(y+h/4)+ h/2, w/2, h/2);
-  //   ///
-  //   ellipse(x+w/2, y+h/2, w/2, h/2);
+    // fill(c);
+    ellipse(x+w/4, y+h/4, w/2, h/2);
+    ellipse((x+w/4)+ w/2, y+h/4, w/2, h/2);
+    ellipse(x+w/4, (y+h/4)+ h/2, w/2, h/2);
+    ellipse((x+w/4)+ w/2,(y+h/4)+ h/2, w/2, h/2);
+    ///
+    ellipse(x+w/2, y+h/2, w/2, h/2);
     
-  // }
+  }
 }
 
