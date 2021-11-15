@@ -31,10 +31,10 @@ color colorEnd = color(255, 5, 147);
 color colorPathMin = color(226, 219, 13); 
 color colorPath = color(12, 87, 18); 
 
-//for storing
+
 HashMap<Integer, Cell> vertices = new HashMap<>();//for storing cells
 
-LinkedList<Cell> queue = new LinkedList<>();
+LinkedList<Cell> stack = new LinkedList<>();
 
 Cell startVert;
 Cell endVert;
@@ -90,14 +90,14 @@ void draw() {
         for (Cell v : adjacents) {
             if (!visited.containsKey(v)){ 
                 visited.put(v, current);
-                queue.addLast(v);
+                stack.addFirst(v);
             }
         }
         
-        if (queue.size()>0) {
+        if (stack.size()>0) {
             grid[current.x / heightCell][current.y / widthCell].highlight(colorPath);
             grid[current.x / heightCell][current.y / widthCell].tine = colorPath;
-            current = queue.removeFirst(); 
+            current = stack.removeFirst(); 
         }
        
         else{
