@@ -23,10 +23,11 @@ The solution of this problem has been done thanks to the implementation of two a
         </td>
     </tr>
 </table>
+<br>
 
 The most importent used libraries:
 
-### - Processing External Libraries
+**- Processing External Libraries**
 -  **controlP5**: used to create the UI buttons and radios
 
 ****
