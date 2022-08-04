@@ -9,14 +9,14 @@ The solution of this problem has been done thanks to the implementation of two a
 <table align="center">
     <tr>
         <td>
-            <img src="./assets/images/bfs.gif" alt="Drawing" style="width: 600px;"/> 
+            <img src="./assets/images/bfs.gif" alt="Drawing" style="width: 900px;"/> 
             <figcaption align="center">
                 BFS
             <figcaption>
         </td>
         <td> </td>
         <td> 
-            <img src="./assets/images/dfs.gif" alt="Drawing" style="width: 600px;"/> 
+            <img src="./assets/images/dfs.gif" alt="Drawing" style="width: 900px;"/> 
             <figcaption align="center" >
                 DFS
             <figcaption>
