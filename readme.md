@@ -2,7 +2,7 @@
 
 ## Description
 
-The aim of this project was to find the optimal path between two points (starting point and arrival point) in a grid made up of cel free and cel obstacles, and this grid represents the maze in question.
+The aim of this project was to find the optimal path between two points (starting point and arrival point) in a grid made up of free cells and obstacle cells, and this grid represents the maze in question.
 
 The solution of this problem has been done thanks to the implementation of two algorithms breadth first search and deep first search.
 
